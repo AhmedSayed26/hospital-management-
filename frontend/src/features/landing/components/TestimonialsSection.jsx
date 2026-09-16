@@ -27,11 +27,23 @@ export default function TestimonialsSection() {
   return (
     <section className="landing-section bg-white px-4 py-24 sm:px-8 lg:px-12">
       <div className="mx-auto max-w-6xl">
-        <div className="text-center">
-          <p className="text-[13px] font-semibold uppercase tracking-wider text-sky-600">Patient Stories</p>
-          <h2 className="font-heading mx-auto mt-2 max-w-[14ch] text-[2.2rem] leading-[1.12] font-medium tracking-tight text-[#24345c] sm:text-[2.8rem]">
-            What Our Patients Say
-          </h2>
+        <div className="grid items-center gap-10 lg:grid-cols-[1.15fr_1fr]">
+          <div className="text-center lg:text-left">
+            <p className="text-[13px] font-semibold uppercase tracking-wider text-sky-600">Patient Stories</p>
+            <h2 className="font-heading mt-2 max-w-[14ch] text-[2.2rem] leading-[1.12] font-medium tracking-tight text-[#24345c] sm:text-[2.8rem]">
+              What Our Patients Say
+            </h2>
+            <p className="mx-auto mt-4 max-w-md text-[15px] leading-relaxed text-slate-500 lg:mx-0">
+              Real experiences from patients who trusted us with their care and recovery.
+            </p>
+          </div>
+          <figure className="overflow-hidden rounded-[1.75rem] shadow-[0_18px_40px_rgba(80,110,150,0.14)]">
+            <img
+              src="/landing/testimonials-hero.png"
+              alt="Happy patient leaving the hospital with family after recovery"
+              className="h-52 w-full object-cover sm:h-60"
+            />
+          </figure>
         </div>
 
         <div className="mt-14 grid gap-5 md:grid-cols-3">

@@ -35,11 +35,23 @@ export default function DepartmentsSection() {
   return (
     <section className="landing-section bg-[#1d2a4a] px-4 py-24 sm:px-8 lg:px-12">
       <div className="mx-auto max-w-6xl">
-        <div className="text-center">
-          <p className="text-[13px] font-semibold uppercase tracking-wider text-sky-300">Why Choose Us</p>
-          <h2 className="font-heading mx-auto mt-2 max-w-[18ch] text-[2.2rem] leading-[1.12] font-medium tracking-tight text-white sm:text-[2.8rem]">
-            Trusted Healthcare Excellence
-          </h2>
+        <div className="grid items-center gap-10 lg:grid-cols-[1fr_1.1fr]">
+          <div>
+            <p className="text-[13px] font-semibold uppercase tracking-wider text-sky-300">Why Choose Us</p>
+            <h2 className="font-heading mt-2 max-w-[18ch] text-[2.2rem] leading-[1.12] font-medium tracking-tight text-white sm:text-[2.8rem]">
+              Trusted Healthcare Excellence
+            </h2>
+            <p className="mt-4 max-w-md text-[15px] leading-relaxed text-slate-300">
+              State-of-the-art facilities, round-the-clock emergency care, and a team committed to your wellbeing.
+            </p>
+          </div>
+          <figure className="overflow-hidden rounded-[1.75rem] border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.25)]">
+            <img
+              src="/landing/departments-icu.png"
+              alt="Modern hospital ICU with advanced monitoring equipment"
+              className="h-56 w-full object-cover sm:h-64"
+            />
+          </figure>
         </div>
 
         <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">

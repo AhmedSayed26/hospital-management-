@@ -1,19 +1,11 @@
-import { useState } from "react"
-
-import { Input } from "@/components/ui/input"
-
-import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select"
-
-import { Button } from "@/components/ui/button"
-
 import { Link } from "react-router-dom"
-
-import { DataPicker } from "@/components/ui/dataPicker"
-
-import { EyeIcon, EyeOffIcon } from "lucide-react"
-
+import { Input } from "@/components/ui/input"
 import { useFormik } from "formik"
 import * as Yup from "yup"
+import { EyeIcon, EyeOffIcon } from "lucide-react"
+import { useState } from "react"
+import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select"
+import { Button } from "@/components/ui/button"
 import { useAuth } from "@/contexts/AuthContext/AuthContext"
 import { toast } from "@/components/ui/toast"
 
@@ -22,29 +14,25 @@ const genderOptions = [
   { label: "Female", value: "FEMALE" },
 ]
 
-// Disease options
-const diseaseOptions = [
-  { label: "Flu", value: "FLU" },
-  { label: "Covid-19", value: "COVID_19" },
-  { label: "Diabetes", value: "DIABETES" },
-  { label: "Hypertension", value: "HYPERTENSION" },
-  { label: "Asthma", value: "ASTHMA" },
-  { label: "Cancer", value: "CANCER" },
-  { label: "Tuberculosis", value: "TUBERCULOSIS" },
-  { label: "Malaria", value: "MALARIA" },
-  { label: "Migraine", value: "MIGRAINE" },
-  { label: "Heart disease", value: "HEART_DISEASE" },
-  { label: "Anxiety", value: "ANXIETY" },
-  { label: "Skin rash", value: "SKIN_RASH" },
-  { label: "Tonsillitis", value: "TONSILLITIS" },
-  { label: "Cataract", value: "CATARACT" },
-  { label: "Hepatitis", value: "HEPATITIS" },
-  { label: "Ulcer", value: "ULCER" },
-  { label: "Kidney stone", value: "KIDNEY_STONE" },
-  { label: "Toothache", value: "TOOTHACHE" },
+const specialtyOptions = [
+  { label: "Cardiology", value: "CARDIOLOGY" },
+  { label: "Neurology", value: "NEUROLOGY" },
+  { label: "Orthopedics", value: "ORTHOPEDICS" },
+  { label: "Dermatology", value: "DERMATOLOGY" },
+  { label: "Pediatrics", value: "PEDIATRICS" },
+  { label: "Psychiatry", value: "PSYCHIATRY" },
+  { label: "General surgery", value: "GENERAL_SURGERY" },
+  { label: "Internal medicine", value: "INTERNAL_MEDICINE" },
+  { label: "ENT", value: "ENT" },
+  { label: "Ophthalmology", value: "OPHTHALMOLOGY" },
+  { label: "Infectious diseases", value: "INFECTIOUS_DISEASES" },
+  { label: "Endocrinology", value: "ENDOCRINOLOGY" },
+  { label: "Oncology", value: "ONCOLOGY" },
+  { label: "Gastroenterology", value: "GASTROENTEROLOGY" },
+  { label: "Urology", value: "UROLOGY" },
+  { label: "Dentistry", value: "DENTISTRY" },
 ]
 
-// Yup validation schema for patient registration
 const validationSchema = Yup.object({
   name: Yup.string()
     .min(3, "Name must be at least 3 characters")
@@ -52,7 +40,8 @@ const validationSchema = Yup.object({
 
   age: Yup.number()
     .typeError("Age must be a number")
-    .min(0, "Age must be 0 or greater")
+    .min(25, "Doctor must be at least 25 years old")
+    .max(80, "Doctor's age must be less than or equal to 80")
     .required("Age is required"),
 
   email: Yup.string()
@@ -63,28 +52,25 @@ const validationSchema = Yup.object({
     .required("Address is required"),
 
   phone: Yup.string()
-    .matches(/^(01)[0-9]{9}$/, "Phone must be a valid Egyptian number (01XXXXXXXXX)")
+    .matches(/^\d{10,15}$/, "Phone must be between 10 and 15 digits")
     .required("Phone is required"),
 
   gender: Yup.string()
     .required("Gender is required"),
 
-  dateOfRegistration: Yup.date()
-    .nullable()
-    .required("Registration date is required"),
+  specialty: Yup.string()
+    .required("Specialty is required"),
 
-  bloodType: Yup.string()
-    .required("Blood type is required"),
-
-  disease: Yup.string()
-    .required("Disease is required"),
+  yearOfExperience: Yup.number()
+    .typeError("Year of experience must be a number")
+    .min(0, "Year of experience must be 0 or greater")
+    .required("Year of experience is required"),
 
   password: Yup.string()
     .min(8, "Password must be at least 8 characters")
     .required("Password is required"),
 })
 
-// get backend payload
 function toBackendPayload(values) {
   return {
     name: values.name,
@@ -92,37 +78,33 @@ function toBackendPayload(values) {
     email: values.email,
     phone: values.phone,
     password: values.password,
-    address: values.address,
-    disease: values.disease,
-    bloodType: values.bloodType,
+    specialty: values.specialty,
+    yearOfExperience: Number(values.yearOfExperience),
     gender: values.gender,
-    dateOfRegistration: values.dateOfRegistration
-      ? values.dateOfRegistration.toISOString().split("T")[0]
-      : null,
+    address: values.address,
   }
 }
 
-export default function PatientsRegister() {
-  const { registerPatient } = useAuth()
+export default function DoctorsRegister() {
   const [showPassword, setShowPassword] = useState(false)
+  const { registerDoctor } = useAuth()
 
   const formik = useFormik({
     initialValues: {
       name: "",
       age: "",
       email: "",
-      address: "",
+      specialty: "",
       phone: "",
+      address: "",
+      yearOfExperience: "",
       gender: "",
-      dateOfRegistration: null,
-      bloodType: "",
-      disease: "",
       password: "",
     },
     validationSchema,
     onSubmit: async (values, { setSubmitting, setStatus }) => {
       try {
-        await registerPatient(toBackendPayload(values))
+        await registerDoctor(toBackendPayload(values))
         toast.add({
           type: "success",
           description: "Registration successful! You can now log in.",
@@ -142,11 +124,11 @@ export default function PatientsRegister() {
   return (
     <div>
       <h2 className="font-heading text-3xl font-medium tracking-tight text-[#24345c]">
-        Patient register
+        Doctor register
       </h2>
-      <p className="mt-2 text-sm text-slate-500">Create an account to book hospital visits.</p>
+      <p className="mt-2 text-sm text-slate-500">Create an account to join the hospital team.</p>
       <form className="space-y-4 my-4" onSubmit={formik.handleSubmit}>
-        {/* name and age */}
+        {/* name and email */}
         <div className="grid grid-cols-2 gap-4">
           <div>
             <Input
@@ -166,25 +148,6 @@ export default function PatientsRegister() {
 
           <div>
             <Input
-              value={formik.values.age}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              type="number"
-              id="age"
-              name="age"
-              placeholder="Enter your age"
-              min="0"
-              required
-            />
-            {formik.touched.age && formik.errors.age && (
-              <p className="text-sm text-red-500 mt-1">{formik.errors.age}</p>
-            )}
-          </div>
-        </div>
-        {/* email and phone */}
-        <div className="grid grid-cols-2 gap-4">
-          <div>
-            <Input
               value={formik.values.email}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
@@ -198,6 +161,32 @@ export default function PatientsRegister() {
               <p className="text-sm text-red-500 mt-1">{formik.errors.email}</p>
             )}
           </div>
+        </div>
+        {/* specialty and phone */}
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <Select
+              id="specialty"
+              name="specialty"
+              items={specialtyOptions}
+              value={formik.values.specialty}
+              onValueChange={(value) => formik.setFieldValue("specialty", value)}
+            >
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="Select a specialty" />
+              </SelectTrigger>
+              <SelectContent>
+                {specialtyOptions.map((item) => (
+                  <SelectItem key={item.value} value={item.value}>
+                    {item.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            {formik.touched.specialty && formik.errors.specialty && (
+              <p className="text-sm text-red-500 mt-1">{formik.errors.specialty}</p>
+            )}
+          </div>
 
           <div>
             <Input
@@ -207,29 +196,50 @@ export default function PatientsRegister() {
               type="text"
               id="phone"
               name="phone"
-              placeholder="01XXXXXXXXX"
+              placeholder="10-15 digit phone number"
+              required
             />
             {formik.touched.phone && formik.errors.phone && (
               <p className="text-sm text-red-500 mt-1">{formik.errors.phone}</p>
             )}
           </div>
         </div>
-        {/* address */}
-        <div>
-          <Input
-            value={formik.values.address}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            type="text"
-            id="address"
-            name="address"
-            placeholder="Enter your address"
-          />
-          {formik.touched.address && formik.errors.address && (
-            <p className="text-sm text-red-500 mt-1">{formik.errors.address}</p>
-          )}
+        {/* address and year of experience */}
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <Input
+              value={formik.values.address}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              type="text"
+              id="address"
+              name="address"
+              placeholder="Enter your address"
+              required
+            />
+            {formik.touched.address && formik.errors.address && (
+              <p className="text-sm text-red-500 mt-1">{formik.errors.address}</p>
+            )}
+          </div>
+
+          <div>
+            <Input
+              value={formik.values.yearOfExperience}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              type="number"
+              id="yearOfExperience"
+              name="yearOfExperience"
+              placeholder="Years of experience"
+              min="0"
+              required
+            />
+            {formik.touched.yearOfExperience && formik.errors.yearOfExperience && (
+              <p className="text-sm text-red-500 mt-1">{formik.errors.yearOfExperience}</p>
+            )}
+          </div>
         </div>
-        {/* gender and date of registration */}
+        {/* gender and age */}
         <div className="grid grid-cols-2 gap-4">
           <div>
             <Select
@@ -256,56 +266,20 @@ export default function PatientsRegister() {
           </div>
 
           <div>
-            <DataPicker
-              id="date-of-registration"
-              name="dateOfRegistration"
-              placeholder="Select date of registration"
-              date={formik.values.dateOfRegistration}
-              onDateChange={(date) => formik.setFieldValue("dateOfRegistration", date)}
-            />
-            {formik.touched.dateOfRegistration && formik.errors.dateOfRegistration && (
-              <p className="text-sm text-red-500 mt-1">{formik.errors.dateOfRegistration}</p>
-            )}
-          </div>
-        </div>
-        {/* blood type and disease */}
-        <div className="grid grid-cols-2 gap-4">
-          <div>
             <Input
-              value={formik.values.bloodType}
+              value={formik.values.age}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              type="text"
-              id="blood-type"
-              name="bloodType"
-              placeholder="Enter your blood type (e.g. A+)"
+              type="number"
+              id="age"
+              name="age"
+              placeholder="Age (25-80)"
+              min="25"
+              max="80"
+              required
             />
-            {formik.touched.bloodType && formik.errors.bloodType && (
-              <p className="text-sm text-red-500 mt-1">{formik.errors.bloodType}</p>
-            )}
-          </div>
-
-          <div>
-            <Select
-              id="disease"
-              name="disease"
-              items={diseaseOptions}
-              value={formik.values.disease}
-              onValueChange={(value) => formik.setFieldValue("disease", value)}
-            >
-              <SelectTrigger className="w-full">
-                <SelectValue placeholder="Select a disease" />
-              </SelectTrigger>
-              <SelectContent>
-                {diseaseOptions.map((item) => (
-                  <SelectItem key={item.value} value={item.value}>
-                    {item.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-            {formik.touched.disease && formik.errors.disease && (
-              <p className="text-sm text-red-500 mt-1">{formik.errors.disease}</p>
+            {formik.touched.age && formik.errors.age && (
+              <p className="text-sm text-red-500 mt-1">{formik.errors.age}</p>
             )}
           </div>
         </div>
@@ -337,14 +311,13 @@ export default function PatientsRegister() {
           <p className="text-sm text-red-500 mt-1">{formik.errors.password}</p>
         )}
 
-
         <Button type="submit" disabled={formik.isSubmitting}>
           {formik.isSubmitting ? "Creating account..." : "Create account"}
         </Button>
       </form>
 
       <div className="flex flex-col items-center justify-center">
-        <p className="mt-2 text-sm text-slate-500">Create an account to book hospital visits.</p>
+        <p className="mt-2 text-sm text-slate-500">Join the hospital team and manage your patients.</p>
         <p className="mt-4 text-sm text-slate-500">
           Already have an account?{" "}
           <Link to="/login" className="font-medium text-[#24345c] underline-offset-4 hover:underline">

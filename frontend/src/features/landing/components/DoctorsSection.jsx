@@ -5,44 +5,40 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/componen
 
 const doctors = [
   {
-    initials: "AH",
+    image: "/landing/doctor-ahmed.png",
     name: "Dr. Ahmed Hassan",
     specialty: "Cardiologist",
     qualification: "MD, FACC",
     experience: "18 years",
     rating: 4.9,
     available: true,
-    color: "bg-sky-100 text-sky-700",
   },
   {
-    initials: "SM",
+    image: "/landing/doctor-sara.png",
     name: "Dr. Sara Mahmoud",
     specialty: "Neurologist",
     qualification: "MD, PhD",
     experience: "14 years",
     rating: 4.8,
     available: true,
-    color: "bg-violet-100 text-violet-700",
   },
   {
-    initials: "KE",
+    image: "/landing/doctor-karim.png",
     name: "Dr. Karim El-Sayed",
     specialty: "Orthopedic Surgeon",
     qualification: "MD, FRCS",
     experience: "20 years",
     rating: 4.9,
     available: false,
-    color: "bg-emerald-100 text-emerald-700",
   },
   {
-    initials: "NF",
+    image: "/landing/doctor-nour.png",
     name: "Dr. Nour Farid",
     specialty: "Pediatrician",
     qualification: "MD, FAAP",
     experience: "12 years",
     rating: 4.7,
     available: true,
-    color: "bg-amber-100 text-amber-700",
   },
 ]
 
@@ -69,12 +65,14 @@ export default function DoctorsSection() {
               className="doctor-card rounded-[1.5rem] border-slate-200/80 bg-white py-6 shadow-[0_8px_30px_rgba(80,110,150,0.08)] transition hover:-translate-y-1 hover:shadow-[0_16px_40px_rgba(80,110,150,0.14)]"
             >
               <CardHeader className="px-6">
-                <div className="flex items-start justify-between">
-                  <span className={`flex size-14 items-center justify-center rounded-2xl text-lg font-semibold ${doctor.color}`}>
-                    {doctor.initials}
-                  </span>
-                  <div className="flex items-center gap-1 text-[13px] font-medium text-amber-500">
-                    <Star className="size-3.5 fill-amber-400 text-amber-400" />
+                <div className="relative">
+                  <img
+                    src={doctor.image}
+                    alt={doctor.name}
+                    className="h-40 w-full rounded-2xl object-cover object-top"
+                  />
+                  <div className="absolute right-3 top-3 flex items-center gap-1 rounded-full bg-white/95 px-2 py-1 text-[12px] font-medium text-amber-500 shadow-sm">
+                    <Star className="size-3 fill-amber-400 text-amber-400" />
                     {doctor.rating}
                   </div>
                 </div>

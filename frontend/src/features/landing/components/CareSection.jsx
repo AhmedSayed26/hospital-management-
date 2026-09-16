@@ -1,4 +1,4 @@
-import { Sparkles } from "lucide-react"
+import { Calendar, Sparkles } from "lucide-react"
 
 export default function CareSection() {
   return (
@@ -32,7 +32,7 @@ export default function CareSection() {
               alt="A clinician reviewing a personalized hospital care plan"
               className="h-64 w-full rounded-[1.85rem] object-cover shadow-[0_18px_40px_rgba(80,110,150,0.14)] md:h-[300px]"
             />
-            <article className="relative z-10 mx-4 -mt-14 flex h-auto flex-col justify-between rounded-[1.7rem] border border-slate-200/80 bg-white p-6 shadow-[0_16px_40px_rgba(80,110,150,0.1)] md:absolute md:top-12 md:-right-16 md:mx-0 md:mt-0 md:h-[236px] md:w-[236px]">
+            <article className="relative z-10 mx-4 right-5 -mt-14 flex h-auto flex-col justify-between rounded-[1.7rem] border border-slate-200/80 bg-white p-6 shadow-[0_16px_40px_rgba(80,110,150,0.1)] md:absolute md:top-12 md:-right-16 md:mx-0 md:mt-0 md:h-[236px] md:w-[236px]">
               <div>
                 <h3 className="text-[17px] font-semibold tracking-tight text-[#24345c]">
                   Personalized Care
@@ -45,7 +45,9 @@ export default function CareSection() {
                 <span className="flex size-8 items-center justify-center rounded-full border border-slate-200 text-slate-500">
                   <Sparkles className="size-3.5" />
                 </span>
-                <span className="size-8 rounded-full border border-slate-200" />
+                <span className="flex size-8 items-center justify-center rounded-full border border-slate-200 text-slate-500" >
+                  <Calendar className="size-3.5" />
+                </span>
               </div>
             </article>
           </div>

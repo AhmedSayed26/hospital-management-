@@ -33,14 +33,23 @@ export default function ProcessSection() {
   return (
     <section className="landing-section bg-gradient-to-b from-sky-50/40 to-white px-4 py-24 sm:px-8 lg:px-12">
       <div className="mx-auto max-w-6xl">
-        <div className="text-center">
-          <p className="text-[13px] font-semibold uppercase tracking-wider text-sky-600">How It Works</p>
-          <h2 className="font-heading mx-auto mt-2 max-w-[16ch] text-[2.2rem] leading-[1.12] font-medium tracking-tight text-[#24345c] sm:text-[2.8rem]">
-            Your Care Journey in 4 Simple Steps
-          </h2>
-          <p className="mx-auto mt-4 max-w-lg text-[15px] leading-relaxed text-slate-500">
-            From finding the right doctor to accessing your records — we make every step seamless.
-          </p>
+        <div className="grid items-center gap-10 lg:grid-cols-2">
+          <div className="text-center lg:text-left">
+            <p className="text-[13px] font-semibold uppercase tracking-wider text-sky-600">How It Works</p>
+            <h2 className="font-heading mt-2 max-w-[16ch] text-[2.2rem] leading-[1.12] font-medium tracking-tight text-[#24345c] sm:text-[2.8rem]">
+              Your Care Journey in 4 Simple Steps
+            </h2>
+            <p className="mx-auto mt-4 max-w-lg text-[15px] leading-relaxed text-slate-500 lg:mx-0">
+              From finding the right doctor to accessing your records — we make every step seamless.
+            </p>
+          </div>
+          <figure className="overflow-hidden rounded-[1.75rem] shadow-[0_18px_40px_rgba(80,110,150,0.14)]">
+            <img
+              src="/landing/process-booking.png"
+              alt="Patient booking a hospital appointment at a self-service kiosk"
+              className="h-52 w-full object-cover sm:h-60"
+            />
+          </figure>
         </div>
 
         <div className="relative mt-16 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">

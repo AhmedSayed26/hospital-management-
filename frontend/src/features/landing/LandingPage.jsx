@@ -18,47 +18,6 @@ export default function LandingPage() {
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.from(".hero-title", {
-        y: 36,
-        opacity: 0,
-        duration: 1,
-        delay: 0.15,
-        ease: "power3.out",
-      })
-      gsap.from(".hero-copy, .hero-cta", {
-        y: 20,
-        opacity: 0,
-        duration: 0.8,
-        delay: 0.35,
-        stagger: 0.12,
-        ease: "power3.out",
-        clearProps: "opacity,transform",
-      })
-      gsap.from(".hero-hand", {
-        y: 48,
-        opacity: 0,
-        duration: 1.2,
-        delay: 0.25,
-        ease: "power3.out",
-      })
-      gsap.from(".float-card", {
-        y: 28,
-        opacity: 0,
-        duration: 0.9,
-        delay: 0.55,
-        stagger: 0.15,
-        ease: "power3.out",
-      })
-      gsap.to(".float-card", {
-        y: "-=10",
-        duration: 3.2,
-        repeat: -1,
-        yoyo: true,
-        ease: "sine.inOut",
-        stagger: 0.45,
-        delay: 1.4,
-      })
-
       gsap.utils.toArray(".landing-section").forEach((section) => {
         gsap.from(section, {
           scrollTrigger: {

@@ -68,16 +68,23 @@ export default function ServicesSection() {
   return (
     <section id="services" className="landing-section bg-gradient-to-b from-white to-sky-50/40 px-4 py-24 sm:px-8 lg:px-12">
       <div className="mx-auto max-w-6xl">
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-          <div>
+        <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
+          <div className="max-w-xl">
             <p className="text-[13px] font-semibold uppercase tracking-wider text-sky-600">Our Specialties</p>
             <h2 className="font-heading mt-2 max-w-[16ch] text-[2.2rem] leading-[1.12] font-medium tracking-tight text-[#24345c] sm:text-[2.8rem]">
               Comprehensive Medical Services
             </h2>
+            <p className="mt-4 max-w-sm text-[15px] leading-relaxed text-slate-500">
+              From routine checkups to complex surgeries — our departments are equipped with modern technology and experienced specialists.
+            </p>
           </div>
-          <p className="max-w-sm text-[15px] leading-relaxed text-slate-500">
-            From routine checkups to complex surgeries — our departments are equipped with modern technology and experienced specialists.
-          </p>
+          <figure className="shrink-0 lg:max-w-[420px]">
+            <img
+              src="/landing/services-banner.png"
+              alt="Modern hospital medical departments and specialized care units"
+              className="h-48 w-full rounded-[1.75rem] object-cover shadow-[0_18px_40px_rgba(80,110,150,0.14)] sm:h-56"
+            />
+          </figure>
         </div>
 
         <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">

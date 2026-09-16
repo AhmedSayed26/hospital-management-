@@ -36,21 +36,29 @@ const faqs = [
 export default function FaqSection() {
   return (
     <section id="faq" className="landing-section bg-gradient-to-b from-white to-sky-50/40 px-4 py-24 sm:px-8 lg:px-12">
-      <div className="mx-auto max-w-3xl">
-        <div className="text-center">
-          <p className="text-[13px] font-semibold uppercase tracking-wider text-sky-600">FAQ</p>
-          <h2 className="font-heading mx-auto mt-2 max-w-[14ch] text-[2.2rem] leading-[1.12] font-medium tracking-tight text-[#24345c] sm:text-[2.8rem]">
-            Frequently Asked Questions
-          </h2>
-          <p className="mx-auto mt-4 max-w-md text-[15px] leading-relaxed text-slate-500">
-            Everything you need to know about appointments, insurance, and patient care.
-          </p>
-        </div>
+      <div className="mx-auto max-w-6xl">
+        <div className="grid items-start gap-12 lg:grid-cols-[1fr_1.1fr]">
+          <div>
+            <p className="text-[13px] font-semibold uppercase tracking-wider text-sky-600">FAQ</p>
+            <h2 className="font-heading mt-2 max-w-[14ch] text-[2.2rem] leading-[1.12] font-medium tracking-tight text-[#24345c] sm:text-[2.8rem]">
+              Frequently Asked Questions
+            </h2>
+            <p className="mt-4 max-w-md text-[15px] leading-relaxed text-slate-500">
+              Everything you need to know about appointments, insurance, and patient care.
+            </p>
+            <figure className="mt-8 hidden overflow-hidden rounded-[1.75rem] shadow-[0_18px_40px_rgba(80,110,150,0.14)] lg:block">
+              <img
+                src="/landing/faq-reception.png"
+                alt="Hospital reception desk staff helping a patient"
+                className="h-72 w-full object-cover"
+              />
+            </figure>
+          </div>
 
-        <Accordion
-          defaultValue={["item-0"]}
-          className="faq-item mt-12 space-y-3"
-        >
+          <Accordion
+            defaultValue={["item-0"]}
+            className="faq-item space-y-3"
+          >
           {faqs.map((faq, index) => (
             <AccordionItem
               key={faq.question}
@@ -65,7 +73,8 @@ export default function FaqSection() {
               </AccordionContent>
             </AccordionItem>
           ))}
-        </Accordion>
+          </Accordion>
+        </div>
       </div>
     </section>
   )

@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { Link, useLocation } from "react-router-dom"
-import { Hospital, Menu, X } from "lucide-react"
+import { HeartPulse, Hospital, Menu, X } from "lucide-react"
 
 const navLinks = [
   { to: "/", label: "Home" },
@@ -23,14 +23,16 @@ export default function NavBar() {
   return (
     <header className="landing-nav pointer-events-none absolute inset-x-0 top-0 z-50 px-4 pt-5 sm:px-6 lg:px-10">
       <div className="pointer-events-auto mx-auto flex max-w-6xl items-center justify-between gap-3">
-        <Link
-          to="/"
-          onClick={() => setOpen(false)}
-          className="flex size-11 shrink-0 items-center justify-center rounded-full bg-[#1d2a4a] text-white shadow-[0_8px_24px_rgba(29,42,74,0.25)]"
-          aria-label="Hospital Management home"
-        >
-          <Hospital className="size-4 -translate-x-px translate-y-px" />
-        </Link>
+        <div className="flex items-center gap-3">
+          <span className="flex size-11 shrink-0 items-center justify-center rounded-full bg-[#1d2a4a] text-white shadow-[0_8px_24px_rgba(29,42,74,0.25)]">
+            <Link 
+            to="/"
+            onClick={() => setOpen(false)}
+            >
+            <HeartPulse className="size-5" strokeWidth={1.75} />
+            </Link>
+          </span>
+        </div>
 
         <nav className="hidden items-center rounded-full border border-white/70 bg-white/55 px-1.5 py-1.5 shadow-[0_8px_32px_rgba(80,120,170,0.12)] backdrop-blur-xl md:flex">
           {navLinks.map((link) => {
