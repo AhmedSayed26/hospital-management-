@@ -36,7 +36,7 @@ export default function LoginForm() {
     onSubmit: async (values, { setSubmitting, setStatus }) => {
       try {
         await login(toBackendPayload(values))
-        navigate("/")
+        navigate("/app/dashboard")
         toast.add({
           type: "success",
           description: "Login successful!",
@@ -54,7 +54,7 @@ export default function LoginForm() {
   })
 
   return (
-      <div>
+      <div className="mx-1">
         <h2 className="font-heading text-3xl font-medium tracking-tight text-[#24345c]">Login</h2>
         <p className="mt-2 text-sm text-slate-500">Sign in to your hospital account.</p>
         <form className="mt-8 space-y-4" onSubmit={formik.handleSubmit}>

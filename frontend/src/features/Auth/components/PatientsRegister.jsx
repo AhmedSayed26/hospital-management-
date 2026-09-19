@@ -6,7 +6,7 @@ import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@
 
 import { Button } from "@/components/ui/button"
 
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 
 import { DataPicker } from "@/components/ui/dataPicker"
 
@@ -104,6 +104,7 @@ function toBackendPayload(values) {
 
 export default function PatientsRegister() {
   const { registerPatient } = useAuth()
+  const navigate = useNavigate()
   const [showPassword, setShowPassword] = useState(false)
 
   const formik = useFormik({
@@ -125,8 +126,9 @@ export default function PatientsRegister() {
         await registerPatient(toBackendPayload(values))
         toast.add({
           type: "success",
-          description: "Registration successful! You can now log in.",
+          description: "Registration successful!",
         })
+        navigate("/app/dashboard")
       } catch (error) {
         setStatus({ error: error.message })
         toast.add({
@@ -140,7 +142,7 @@ export default function PatientsRegister() {
   })
 
   return (
-    <div>
+    <div className="mx-1">
       <h2 className="font-heading text-3xl font-medium tracking-tight text-[#24345c]">
         Patient register
       </h2>

@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { Input } from "@/components/ui/input"
 import { useFormik } from "formik"
 import * as Yup from "yup"
@@ -88,6 +88,7 @@ function toBackendPayload(values) {
 export default function DoctorsRegister() {
   const [showPassword, setShowPassword] = useState(false)
   const { registerDoctor } = useAuth()
+  const navigate = useNavigate()
 
   const formik = useFormik({
     initialValues: {
@@ -107,8 +108,9 @@ export default function DoctorsRegister() {
         await registerDoctor(toBackendPayload(values))
         toast.add({
           type: "success",
-          description: "Registration successful! You can now log in.",
+          description: "Registration successful!",
         })
+        navigate("/app/dashboard")
       } catch (error) {
         setStatus({ error: error.message })
         toast.add({
@@ -122,7 +124,7 @@ export default function DoctorsRegister() {
   })
 
   return (
-    <div>
+    <div className="mx-1">
       <h2 className="font-heading text-3xl font-medium tracking-tight text-[#24345c]">
         Doctor register
       </h2>
