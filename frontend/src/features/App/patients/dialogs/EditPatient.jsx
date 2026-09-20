@@ -87,6 +87,7 @@ export default function EditPatient({ patient, open, onOpenChange, onSaved }) {
             <DialogDescription>Update patient details</DialogDescription>
           </DialogHeader>
 
+          {/* Patient Details */}
           <div className="grid max-h-[60vh] gap-3 overflow-y-auto px-1 py-1">
             <div className="grid grid-cols-2 gap-3">
               <div className="space-y-1.5">
