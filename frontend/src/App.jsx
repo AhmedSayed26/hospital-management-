@@ -15,6 +15,7 @@ import PatientsPage from "./pages/app/PatientsPage";
 import RoomsPage from "./pages/app/RoomsPage";
 import ReportsPage from "./pages/app/ReportsPage";
 import ProfilePage from "./pages/app/ProfilePage";
+import PatiendDetails from "./features/App/patients/[patientId]/PatiendDetails";
 
 function App() {
   return (
@@ -41,6 +42,14 @@ function App() {
           element={
             <RequireRole roles={["ADMIN"]}>
               <PatientsPage />
+            </RequireRole>
+          }
+        />
+        <Route
+          path="patients/:patientId"
+          element={
+            <RequireRole roles={["ADMIN"]}>
+              <PatiendDetails />
             </RequireRole>
           }
         />

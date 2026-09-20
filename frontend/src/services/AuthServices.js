@@ -1,11 +1,9 @@
-import axios from "axios";
-
-const API_URL = `${import.meta.env.VITE_API_URL || "http://localhost:8080"}/api/auth`;
+import apiClient from "@/api/client";
 
 const AuthServices = {
   async registerPatient(patientData) {
-    const response = await axios.post(
-      `${API_URL}/register/patient`,
+    const response = await apiClient.post(
+      "/auth/register/patient",
       patientData
     );
 
@@ -13,8 +11,8 @@ const AuthServices = {
   },
 
   async registerDoctor(doctorData) {
-    const response = await axios.post(
-      `${API_URL}/register/doctor`,
+    const response = await apiClient.post(
+      "/auth/register/doctor",
       doctorData
     );
 
@@ -22,7 +20,7 @@ const AuthServices = {
   },
 
   async login(credentials) {
-    const response = await axios.post(`${API_URL}/login`, credentials);
+    const response = await apiClient.post("/auth/login", credentials);
 
     return response.data;
   },

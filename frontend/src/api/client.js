@@ -1,39 +1,34 @@
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8080'
+import axios from "axios";
+
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8080";
 
 export function getToken() {
-  return localStorage.getItem('token')
+  return localStorage.getItem("token");
 }
 
 export function setToken(token) {
   if (token) {
-    localStorage.setItem('token', token)
+    localStorage.setItem("token", token);
   } else {
-    localStorage.removeItem('token')
+    localStorage.removeItem("token");
   }
 }
 
-export async function api(path, options = {}) {
-  const token = getToken()
-  const headers = {
-    'Content-Type': 'application/json',
-    ...(options.headers || {}),
-  }
+const apiClient = axios.create({
+  baseURL: `${API_URL}/api`,
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
+
+apiClient.interceptors.request.use((config) => {
+  const token = getToken();
 
   if (token) {
-    headers.Authorization = `Bearer ${token}`
+    config.headers.Authorization = `Bearer ${token}`;
   }
 
-  const response = await fetch(`${API_URL}${path}`, {
-    ...options,
-    headers,
-  })
+  return config;
+});
 
-  const body = await response.json().catch(() => null)
-
-  if (!response.ok) {
-    const message = body?.message || `Request failed (${response.status})`
-    throw new Error(message)
-  }
-
-  return body
-}
+export default apiClient;

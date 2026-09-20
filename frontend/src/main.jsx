@@ -12,8 +12,8 @@ createRoot(document.getElementById('root')).render(
     <ThemeProvider defaultTheme="system" defaultColor="medical">
       <BrowserRouter>
         <AuthProvider>
-          <App />
           <Toaster />
+          <App />
         </AuthProvider>
       </BrowserRouter>
     </ThemeProvider>

@@ -1,10 +1,7 @@
-import PlaceholderPage from "./PlaceholderPage";
+import Appointments from "@/features/App/appointments/appointments";
 
 export default function AppointmentsPage() {
   return (
-    <PlaceholderPage
-      title="Appointments"
-      description="View and manage your scheduled appointments."
-    />
+        <Appointments />
   );
 }

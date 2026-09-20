@@ -1,10 +1,7 @@
-import PlaceholderPage from "./PlaceholderPage";
+import Patients from "@/features/App/patients/Patients";
 
 export default function PatientsPage() {
   return (
-    <PlaceholderPage
-      title="Patients"
-      description="Browse, search, and manage patient records."
-    />
+    <Patients />
   );
 }
