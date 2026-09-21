@@ -10,6 +10,7 @@ import {
   User,
   Hospital,
   LogOut,
+  BriefcaseMedical
 } from "lucide-react";
 import { useAuth, ROLE_LABELS } from "@/contexts/AuthContext/AuthContext";
 import { getNavItemsForRole } from "@/config/nav.config";
@@ -35,6 +36,7 @@ const ICONS = {
   BedDouble,
   ClipboardList,
   User,
+  BriefcaseMedical
 };
 
 export default function AppSidebar() {

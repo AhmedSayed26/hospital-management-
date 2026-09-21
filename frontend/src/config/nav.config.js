@@ -30,6 +30,12 @@ export const NAV_ITEMS = [
     roles: ["ADMIN"],
   },
   {
+    title: "Doctors",
+    href: "/app/doctors",
+    icon: "BriefcaseMedical",
+    roles: ["ADMIN"],
+  },
+  {
     title: "Rooms",
     href: "/app/rooms",
     icon: "BedDouble",

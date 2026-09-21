@@ -16,6 +16,8 @@ import RoomsPage from "./pages/app/RoomsPage";
 import ReportsPage from "./pages/app/ReportsPage";
 import ProfilePage from "./pages/app/ProfilePage";
 import PatiendDetails from "./features/App/patients/[patientId]/PatiendDetails";
+import DoctorsPage from "./pages/app/DoctorsPage";
+import DoctorDetails from "./features/App/doctors/[doctorId]/DoctorDetails";
 
 function App() {
   return (
@@ -50,6 +52,22 @@ function App() {
           element={
             <RequireRole roles={["ADMIN"]}>
               <PatiendDetails />
+            </RequireRole>
+          }
+        />
+        <Route
+          path="doctors"
+          element={
+            <RequireRole roles={["ADMIN"]}>
+              <DoctorsPage />
+            </RequireRole>
+          }
+        />
+        <Route
+          path="doctors/:doctorId"
+          element={
+            <RequireRole roles={["ADMIN"]}>
+              <DoctorDetails />
             </RequireRole>
           }
         />
