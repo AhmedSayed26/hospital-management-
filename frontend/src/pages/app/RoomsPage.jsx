@@ -1,10 +1,7 @@
-import PlaceholderPage from "./PlaceholderPage";
+import Rooms from "@/features/App/rooms/Rooms";
 
 export default function RoomsPage() {
   return (
-    <PlaceholderPage
-      title="Rooms"
-      description="Manage hospital rooms and patient assignments."
-    />
+    <Rooms />
   );
 }

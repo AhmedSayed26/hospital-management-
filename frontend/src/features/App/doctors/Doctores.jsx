@@ -6,6 +6,15 @@ import TableContent from "./components/TableContent";
 import DoctorService from "@/services/Doctor";
 import { toast } from "@/components/ui/toast";
 import { getErrorMessage, toList } from "@/shared/utils";
+import {
+  Empty,
+  EmptyHeader,
+  EmptyMedia,
+  EmptyTitle,
+  EmptyDescription,
+} from "@/components/ui/empty";
+import { User } from "lucide-react";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function Doctores() {
   const [doctors, setDoctors] = useState([]);
@@ -43,6 +52,38 @@ export default function Doctores() {
     setSelected(doctor);
     setDialogMode(mode);
   };
+
+
+  if (loading) {
+    return (
+      <div className="space-y-4">
+        <Skeleton className="h-8 w-48" />
+        <Skeleton className="h-20 w-full" />
+        <Skeleton className="h-20 w-full" />
+        <Skeleton className="h-20 w-full" />
+      </div>
+    )
+  }
+
+
+  if (doctors.length === 0) {
+    return (
+      <Empty className="border min-h-[320px]">
+        <EmptyHeader>
+          <EmptyMedia variant="icon">
+            <User />
+          </EmptyMedia>
+        </EmptyHeader>
+        <EmptyTitle>No doctors found</EmptyTitle>
+        <EmptyDescription>
+          You don't have any doctors yet
+        </EmptyDescription>
+        <EmptyDescription>
+          <AddDoctors onCreated={getDoctors} />
+        </EmptyDescription>
+      </Empty>
+    )
+  }
 
   return (
     <div className="space-y-4">

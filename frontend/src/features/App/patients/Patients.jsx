@@ -6,7 +6,15 @@ import TableContent from "./components/TableContent";
 import PatientServices from "@/services/Patient";
 import { toast } from "@/components/ui/toast";
 import { getErrorMessage, toList } from "@/shared/utils";
-
+import { Skeleton } from "@/components/ui/skeleton";
+import {
+  Empty,
+  EmptyHeader,
+  EmptyMedia,
+  EmptyTitle,
+  EmptyDescription,
+} from "@/components/ui/empty";
+import { User } from "lucide-react";
 export default function Patients() {
   const [patients, setPatients] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -44,6 +52,36 @@ export default function Patients() {
     setDialogMode(mode);
   };
 
+
+  if (loading) {
+    return (
+      <div className="space-y-4">
+        <Skeleton className="h-8 w-48" />
+        <Skeleton className="h-20 w-full" />
+        <Skeleton className="h-20 w-full" />
+        <Skeleton className="h-20 w-full" />
+      </div>
+    )
+  }
+
+  if (patients.length === 0) {
+    return (
+      <Empty className="border min-h-[320px]">
+        <EmptyHeader>
+          <EmptyMedia variant="icon">
+            <User />
+          </EmptyMedia>
+          <EmptyTitle>No patients found</EmptyTitle>
+          <EmptyDescription>
+            You don't have any patients yet
+          </EmptyDescription>
+          <EmptyDescription>
+            <AddPatient onCreated={getPatients} />
+          </EmptyDescription>
+        </EmptyHeader>
+      </Empty>
+    )
+  }
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between gap-3">

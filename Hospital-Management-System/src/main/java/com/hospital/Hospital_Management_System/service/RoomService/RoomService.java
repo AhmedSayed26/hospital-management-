@@ -44,12 +44,11 @@ public class RoomService implements IRoomService {
         Room room = roomRepository.findById(id)
                 .orElseThrow(() -> new RoomNotFoundException("Room not found"));
 
+        int occupiedBeds = room.getTotalBeds() - room.getAvailableBeds();
+
         room.setRoomNumber(request.getRoomNumber());
         room.setTotalBeds(request.getTotalBeds());
-
-        if (room.getAvailableBeds() > request.getTotalBeds()) {
-            room.setAvailableBeds(request.getTotalBeds());
-        }
+        room.setAvailableBeds(Math.max(0, request.getTotalBeds() - occupiedBeds));
 
         return convertToDto(roomRepository.save(room));
     }
