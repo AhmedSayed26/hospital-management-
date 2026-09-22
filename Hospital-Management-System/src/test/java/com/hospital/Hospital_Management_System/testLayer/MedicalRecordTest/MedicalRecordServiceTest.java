@@ -141,8 +141,8 @@ public class MedicalRecordServiceTest {
 
     @Test
     void testGetRecordsByPatientId() {
-        when(patientRepository.findById(2L)).thenReturn(Optional.of(patient));
-        when(medicalRecordRepository.findByPatientId(patient)).thenReturn(List.of(record));
+        when(patientRepository.existsById(2L)).thenReturn(true);
+        when(medicalRecordRepository.findByPatientId(2L)).thenReturn(List.of(record));
 
         List<MedicalRecordDto> result = medicalRecordService.getRecordsByPatientId(2L);
         assertEquals(1, result.size());

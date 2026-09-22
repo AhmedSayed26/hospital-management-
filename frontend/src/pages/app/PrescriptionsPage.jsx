@@ -1,10 +1,7 @@
-import PlaceholderPage from "./PlaceholderPage";
+import Prescription from "@/features/App/prescription/Prescription";
 
 export default function PrescriptionsPage() {
   return (
-    <PlaceholderPage
-      title="Prescriptions"
-      description="View prescribed medications and dosage instructions."
-    />
+    <Prescription />
   );
 }

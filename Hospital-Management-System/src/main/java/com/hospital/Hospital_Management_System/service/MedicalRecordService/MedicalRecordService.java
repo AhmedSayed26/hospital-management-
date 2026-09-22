@@ -93,9 +93,10 @@ public class MedicalRecordService implements IMedicalRecordService {
 
     @Override
     public List<MedicalRecordDto> getRecordsByPatientId(Long patientId) {
-        Patient patient = patientRepository.findById(patientId)
-                .orElseThrow(() -> new PatientNotFoundException("Patient with ID: " + patientId + " not found"));
-        return convertToDtoList(medicalRecordRepository.findByPatientId(patient));
+        if (!patientRepository.existsById(patientId)) {
+            throw new PatientNotFoundException("Patient with ID: " + patientId + " not found");
+        }
+        return convertToDtoList(medicalRecordRepository.findByPatientId(patientId));
     }
 
     @Override
