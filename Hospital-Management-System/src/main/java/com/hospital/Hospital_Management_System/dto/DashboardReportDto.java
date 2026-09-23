@@ -7,21 +7,10 @@ import java.util.Date;
 
 @Data
 @Builder
-public class MedicalReportDto {
-
+public class DashboardReportDto {
     private Long id;
     private String reportTitle;
-
     private Date reportDate;
-
-    private String content;
-
-    private Long patientId;
-    private String PatientName;
-
-    private Long doctorId;
+    private String patientName;
     private String doctorName;
-
-    private Long medicalRecordId;
-
 }

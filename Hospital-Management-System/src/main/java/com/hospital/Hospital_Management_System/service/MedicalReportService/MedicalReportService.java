@@ -6,6 +6,7 @@ import com.hospital.Hospital_Management_System.entity.Doctor;
 import com.hospital.Hospital_Management_System.entity.MedicalRecord;
 import com.hospital.Hospital_Management_System.entity.MedicalReport;
 import com.hospital.Hospital_Management_System.entity.Patient;
+import com.hospital.Hospital_Management_System.exception.AlreadyExistsException;
 import com.hospital.Hospital_Management_System.exception.DoctorNotFoundException;
 import com.hospital.Hospital_Management_System.exception.MedicalRecordNotFoundException;
 import com.hospital.Hospital_Management_System.exception.MedicalReportNotFoundException;
@@ -40,6 +41,7 @@ public class MedicalReportService implements IMedicalReportService {
         log.info("Creating medical report...");
         MedicalReport report = addNewReport(request);
         report = medicalReportRepository.save(report);
+        linkMedicalRecord(report, report.getMedicalRecord());
         sendMedicalReportEmailToPatient(report);
         return convertToDto(report);
     }
@@ -57,10 +59,11 @@ public class MedicalReportService implements IMedicalReportService {
 
     @Override
     public void deleteReport(Long id) {
-        medicalReportRepository.findById(id)
-                .ifPresentOrElse(medicalReportRepository::delete, () -> {
-                    throw new MedicalReportNotFoundException("MedicalReport Not Found.");
-                });
+        MedicalReport report = medicalReportRepository.findById(id)
+                .orElseThrow(() -> new MedicalReportNotFoundException("MedicalReport Not Found."));
+
+        unlinkMedicalRecord(report);
+        medicalReportRepository.delete(report);
     }
 
     @Override
@@ -101,6 +104,9 @@ public class MedicalReportService implements IMedicalReportService {
                 .doctorName(report.getDoctor().getName())
                 .patientId(report.getPatient().getId())
                 .PatientName(report.getPatient().getName())
+                .medicalRecordId(
+                        report.getMedicalRecord() != null ? report.getMedicalRecord().getId() : null
+                )
                 .build();
     }
 
@@ -117,6 +123,8 @@ public class MedicalReportService implements IMedicalReportService {
 
         MedicalRecord record = medicalRecordRepository.findById(request.getMedicalRecordId())
                 .orElseThrow(() -> new MedicalRecordNotFoundException("Medical Record not found"));
+
+        ensureMedicalRecordHasNoReport(record.getId(), null);
 
         return MedicalReport.builder()
                 .reportTitle(request.getReportTitle())
@@ -154,8 +162,52 @@ public class MedicalReportService implements IMedicalReportService {
                 .ifPresent(id -> {
                     MedicalRecord record = medicalRecordRepository.findById(id)
                             .orElseThrow(() -> new MedicalRecordNotFoundException("Medical Record with ID: " + id + " not found"));
-                    report.setMedicalRecord(record);
+                    linkMedicalRecord(report, record);
                 });
+    }
+
+    private void linkMedicalRecord(MedicalReport report, MedicalRecord record) {
+        if (record == null) {
+            unlinkMedicalRecord(report);
+            return;
+        }
+
+        if (report.getMedicalRecord() != null
+                && record.getId().equals(report.getMedicalRecord().getId())) {
+            record.setMedicalReport(report);
+            medicalRecordRepository.save(record);
+            return;
+        }
+
+        ensureMedicalRecordHasNoReport(record.getId(), report.getId());
+
+        unlinkMedicalRecord(report);
+
+        report.setMedicalRecord(record);
+        record.setMedicalReport(report);
+        medicalRecordRepository.save(record);
+    }
+
+    private void ensureMedicalRecordHasNoReport(Long medicalRecordId, Long currentReportId) {
+        boolean alreadyLinked = medicalReportRepository.findByMedicalRecordId(medicalRecordId).stream()
+                .anyMatch(existing -> currentReportId == null || !existing.getId().equals(currentReportId));
+
+        if (alreadyLinked) {
+            throw new AlreadyExistsException(
+                    "This medical record already has a report. Each record can only have one report."
+            );
+        }
+    }
+
+    private void unlinkMedicalRecord(MedicalReport report) {
+        MedicalRecord record = report.getMedicalRecord();
+        if (record == null) {
+            return;
+        }
+
+        record.setMedicalReport(null);
+        medicalRecordRepository.save(record);
+        report.setMedicalRecord(null);
     }
 
     private void sendMedicalReportEmailToPatient(MedicalReport report) {

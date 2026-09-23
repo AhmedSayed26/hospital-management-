@@ -125,6 +125,12 @@ public class SecurityConfiguration {
                         .requestMatchers("/api/rooms", "/api/rooms/**")
                         .hasAnyAuthority("USER", "ADMIN")
 
+                        .requestMatchers("/api/dashboard/patient")
+                        .hasAuthority("USER")
+
+                        .requestMatchers("/api/dashboard/doctor")
+                        .hasAuthority("ADMIN")
+
                         .anyRequest()
                         .permitAll()
                 );

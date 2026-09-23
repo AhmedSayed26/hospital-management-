@@ -45,12 +45,6 @@ export const NAV_ITEMS = [
     title: "Reports",
     href: "/app/reports",
     icon: "ClipboardList",
-    roles: ["ADMIN"],
-  },
-  {
-    title: "Profile",
-    href: "/app/profile",
-    icon: "User",
     roles: ["USER", "ADMIN"],
   },
 ];

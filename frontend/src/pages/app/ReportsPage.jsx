@@ -1,10 +1,7 @@
-import PlaceholderPage from "./PlaceholderPage";
+import MedicalReport from "@/features/App/medical-report/MedicalReport";
 
 export default function ReportsPage() {
   return (
-    <PlaceholderPage
-      title="Reports"
-      description="Review medical reports and diagnostic summaries."
-    />
+    <MedicalReport />
   );
 }

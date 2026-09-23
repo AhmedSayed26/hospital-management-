@@ -1,10 +1,7 @@
-import PlaceholderPage from "./PlaceholderPage";
+import Dashboard from "@/features/App/dashboard/Dashboard";
 
 export default function DashboardPage() {
   return (
-    <PlaceholderPage
-      title="Dashboard"
-      description="Overview of your hospital activity and quick actions."
-    />
+    <Dashboard />
   );
 }
